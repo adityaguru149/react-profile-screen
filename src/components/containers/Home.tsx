@@ -10,6 +10,7 @@ import API from "src/api/auth_api";
 import { ProfileData } from "src/model/ProfileData";
 import { APIResult } from "src/model/APIResult";
 import { ProfileCard } from "../shared/ProfileCard";
+import { CustomCalendar } from "../shared/CustomCalendar";
 
 export const Home = (): JSX.Element => {
   const classes = useStyles();
@@ -50,11 +51,19 @@ export const Home = (): JSX.Element => {
     navigate("/edit");
   }, []);
 
+  const handleDateUpdate = React.useCallback((date: Date) => {
+    console.log("new date: ", date);
+  }, []);
+
   return (
     <Box sx={{ minWidth: "1112px", maxWidth: "1112px", padding: "0 64px 0 64px" }}>
       <TopBar logoutActionHandler={handleLogout} />
       {profileData !== null ? (
-        <ProfileCard profile={profileData} goToProfileEditionHandler={handleGoToProfileEdition} />
+        <Box sx={{ display: "flex", margin: "20px 0 20px 0" }}>
+          <ProfileCard profile={profileData} goToProfileEditionHandler={handleGoToProfileEdition} />
+          <Box sx={{ display: "flex", alignItems: "center", pl: 4 }} />
+          <CustomCalendar onDateChangeHandler={handleDateUpdate} />
+        </Box>
       ) : (
         <Typography sx={{ marginBottom: "16px" }} variant="body1" color="text.primary" component="div">
           {noProfileDataMsgText}

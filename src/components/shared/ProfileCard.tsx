@@ -29,7 +29,7 @@ export const ProfileCard = (props: ProfileCardProps): JSX.Element => {
   const profileCardDetailsLinkText = "View contact";
 
   return (
-    <Box sx={{ minWidth: "256px", maxWidth: "512px" }}>
+    <Box sx={{ minWidth: "512px", maxWidth: "512px" }}>
       <Card
         sx={{
           flex: 1,

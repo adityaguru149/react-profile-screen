@@ -6,7 +6,7 @@ This project contains a simple react profile management app.
 
 - Stack: React + Webpack + Typescript + MUI (Material UI)
 
-- Estimated time: 1d
+- Estimated time: 5hours
 
 ## Usage
 
