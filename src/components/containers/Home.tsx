@@ -6,43 +6,60 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import { useNavigate } from "react-router-dom";
+import API from "src/api/auth_api";
+import { ProfileData } from "src/model/ProfileData";
+import { APIResult } from "src/model/APIResult";
+import { ProfileCard } from "../shared/ProfileCard";
 
 export const Home = (): JSX.Element => {
   const classes = useStyles();
   const navigate = useNavigate();
 
-  const shortLoremText =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
-    " Ultrices nec, leo, nunc tempor, suspendisse eu et.  " +
-    "Aliquam tortor et faucibus semper ornare vitae nibh tincidunt. " +
-    "Ultricies in arcu eleifend porta fringilla tellus lacus.";
-  const longLoremText =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ultrices nec, leo, nunc tempor, suspendisse eu et. " +
-    "Aliquam tortor et faucibus semper ornare vitae nibh tincidunt." +
-    " Ultricies in arcu eleifend porta fringilla tellus lacus." +
-    " Aliquam tortor et faucibus semper ornare vitae nibh tincidunt." +
-    " Ultricies in arcu eleifend porta fringilla tellus lacus.";
+  // TODO: Manage translations with i18n
+  const noProfileDataMsgText = "Oops something went wrong! No profile data to display.";
+
+  // Local state(s)
+  const [profileData, setProfileData] = React.useState<ProfileData | null>(null);
 
   React.useEffect(() => {
     checkLogin();
   }, []);
 
-  const checkLogin = () => {
+  const checkLogin = async () => {
     const jwtToken: string | null = localStorage.getItem("jwt");
     // jwtToken not saved so user is not logged
     if (jwtToken == null) {
       navigate("/login");
+    } else {
+      const response: APIResult<ProfileData> = await API.getProfileUser(jwtToken);
+      if (response.type === "success") {
+        setProfileData(response.value);
+      } else {
+        console.error("Oops something went wrong!");
+      }
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = React.useCallback(() => {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("profile");
     navigate("/login");
-  };
+  }, []);
+
+  const handleGoToProfileEdition = React.useCallback(() => {
+    navigate("/edit");
+  }, []);
 
   return (
     <Box sx={{ minWidth: "1112px", maxWidth: "1112px", padding: "0 64px 0 64px" }}>
       <TopBar logoutActionHandler={handleLogout} />
+      {profileData !== null ? (
+        <ProfileCard profile={profileData} goToProfileEditionHandler={handleGoToProfileEdition} />
+      ) : (
+        <Typography sx={{ marginBottom: "16px" }} variant="body1" color="text.primary" component="div">
+          {noProfileDataMsgText}
+        </Typography>
+      )}
     </Box>
   );
 };

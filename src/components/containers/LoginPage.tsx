@@ -52,9 +52,9 @@ export const LoginCard = (props: { loginActionHandler: (username: string, passwo
   const [password, setPassword] = React.useState<string>("");
   const [paswordVisible, setPasswordVisible] = React.useState<boolean>(false);
 
-  const togglePasswordVisibility = () => {
+  const togglePasswordVisibility = React.useCallback(() => {
     setPasswordVisible(!paswordVisible);
-  };
+  }, [paswordVisible]);
 
   return (
     <Card
@@ -66,7 +66,7 @@ export const LoginCard = (props: { loginActionHandler: (username: string, passwo
       }}>
       <Box sx={{ display: "flex", flex: 1, flexDirection: "column" }}>
         <CardContent sx={{ flex: "1 0 auto", paddingTop: 0 }}>
-          <Typography sx={{ marginBottom: "4px" }} variant="body1" color="text.secondary" component="div">
+          <Typography sx={{ marginBottom: "4px" }} variant="body1" color="text.primary" component="div">
             {usernameLabelText}
           </Typography>
           <TextField
@@ -78,7 +78,7 @@ export const LoginCard = (props: { loginActionHandler: (username: string, passwo
             }}
             sx={{ display: "flex", flex: 1, marginBottom: "16px" }}
           />
-          <Typography sx={{ marginBottom: "4px" }} variant="body1" color="text.secondary" component="div">
+          <Typography sx={{ marginBottom: "4px" }} variant="body1" color="text.primary" component="div">
             {passwordLabelText}
           </Typography>
           <TextField

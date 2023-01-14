@@ -23,8 +23,8 @@ export const THEME_STYLE = createTheme({
       contrastText: "#fff",
     },
     text: {
-      primary: "#415852",
-      secondary: "#5D6F6B",
+      primary: "#222832",
+      secondary: "#7e8796",
     },
     background: {
       default: "#f9f9f9",

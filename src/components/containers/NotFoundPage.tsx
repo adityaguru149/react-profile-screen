@@ -12,9 +12,9 @@ import { useNavigate } from "react-router-dom";
 export const NotFoundPage = (): JSX.Element => {
   const navigate = useNavigate();
 
-  const handleReturnToHome = () => {
+  const handleReturnToHome = React.useCallback(() => {
     navigate("/");
-  };
+  }, []);
 
   return (
     <Box sx={{ minWidth: "256px", maxWidth: "512px", padding: "64px" }}>
@@ -41,7 +41,7 @@ export const NotFoundCard = (props: { goToHomeActionHandler: () => void }): JSX.
       }}>
       <Box sx={{ display: "flex", flex: 1, flexDirection: "column" }}>
         <CardContent sx={{ flex: "1 0 auto", paddingTop: 0 }}>
-          <Typography sx={{ marginBottom: "16px" }} variant="body1" color="text.secondary" component="div">
+          <Typography sx={{ marginBottom: "16px" }} variant="body1" color="text.primary" component="div">
             {pageNotFoundTitleText}
           </Typography>
           <Button
