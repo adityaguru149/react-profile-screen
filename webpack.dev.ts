@@ -28,9 +28,6 @@ const config: WebPackConfiguration = {
     overlay: true,
     liveReload: true,
     port: 8080,
-    // security issue so only used in dev server
-    // https://stackoverflow.com/questions/43619644/i-am-getting-an-invalid-host-header-message-when-connecting-to-webpack-dev-ser
-    disableHostCheck: true
   },
   module: {
     rules: [
