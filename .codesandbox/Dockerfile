@@ -1,1 +1,1 @@
-FROM node:14.8-buster
+FROM node:14-buster
